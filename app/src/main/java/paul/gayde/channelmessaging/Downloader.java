@@ -89,9 +89,9 @@ public class Downloader extends AsyncTask<Void,Void,String>{
         return result.toString();
     }
 
-    public interface OnDownloadCompleteListener{
-        public void onDownloadComplete(String content);
-    }
+public interface OnDownloadCompleteListener{
+    public void onDownloadComplete(String content);
+}
 
     ArrayList<OnDownloadCompleteListener> al = new ArrayList<OnDownloadCompleteListener>();
 
