@@ -14,21 +14,27 @@ import java.util.List;
 /**
  * Created by gaydep on 27/01/2017.
  */
+
 public class MyAdapter extends ArrayAdapter<Channel> {
-    public MyAdapter(Context context, List<Channel> channels) {
-        super(context, 0, channels);
+    private final Context context;
+    private final List<Channel> values;
+
+
+    public MyAdapter(Context context, List<Channel> values) {
+        super(context, R.layout.channels_list_row, values);
+        this.context = context;
+        this.values = values;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Channel channel = getItem(position);
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_channel_list, parent, false);
-        }
-        TextView channelsName = (TextView) convertView.findViewById(R.id.textViewChannelName);
-        TextView channelsNbPers = (TextView) convertView.findViewById(R.id.textViewChannelNbPers);
-        channelsName.setText(channel.getName());
-        channelsNbPers.setText("Nombre de personnes connectées : " + channel.getConnectedusers().toString());
-        return convertView;
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View rowView = inflater.inflate(R.layout.channels_list_row, parent, false);
+        TextView tvName = (TextView) rowView.findViewById(R.id.tvName);
+        TextView tvUser = (TextView) rowView.findViewById(R.id.tvNbPers);
+        Channel chan = values.get(position);
+        tvName.setText(chan.getName());
+        tvUser.setText("nombre d'utilisateurs connectés : " + chan.getConnectedusers());
+        return rowView;
     }
 }

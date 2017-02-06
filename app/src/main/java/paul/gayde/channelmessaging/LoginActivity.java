@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
             SharedPreferences.Editor editor = settings.edit();
             editor.putString("accesstoken", r.accesstoken);
-
+            editor.commit();
             Intent appel = new Intent(getApplicationContext(),ChannelListActivity.class);
             startActivity(appel);
         }

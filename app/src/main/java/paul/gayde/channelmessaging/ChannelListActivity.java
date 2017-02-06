@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,17 +18,20 @@ public class ChannelListActivity extends AppCompatActivity implements AdapterVie
 
     public static final String PREFS_NAME = "stockage";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel_list);
 
+        lvChannels = (ListView) findViewById(R.id.lvChannels);
+        lvChannels.setOnItemClickListener(this);
 
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        String accestoken = settings.getString("accestoken","");
+        String accestoken = settings.getString("accesstoken","");
 
         HashMap<String,String> params = new HashMap<>();
-        params.put("accestoken",accestoken);
+        params.put("accesstoken",accestoken);
 
         Downloader d = new Downloader(this,"http://www.raphaelbischof.fr/messaging/?function=getchannels",params);
         d.addOnDownloadCompleteListener(this);
@@ -38,7 +40,7 @@ public class ChannelListActivity extends AppCompatActivity implements AdapterVie
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
     }
 
@@ -53,7 +55,7 @@ public class ChannelListActivity extends AppCompatActivity implements AdapterVie
         }
 
         lvChannels = (ListView) findViewById(R.id.lvChannels);
-        lvChannels.setAdapter(new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, c.channels));
+        lvChannels.setAdapter(new MyAdapter(getApplicationContext(), c.channels));
         lvChannels.setOnItemClickListener(this);
     }
 }
